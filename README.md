@@ -27,9 +27,9 @@ By default, stashed files are deleted after one retrieval. If configured not to 
 
 ## What should I consider when using the Stash Utility?
 
-- The client browser must be able to retrieve the original file that is to be stashed, including authentication and authorization to that file.
+- The client browser must be able to retrieve the original file that is to be stashed, including authentication and authorization to that file and cross-origin resource sharing (CORS).
 - The request to **stash** and the response to **retrieve** contain files. The response to **stash** contains plain-text unique IDs, which can be used to retrieve files. If you don't want anyone else to be able to get your files, you should use HTTPS when calling both the **stash** and the **retrieve** operations.
-- The client browser must be able to access the Stash Utility, including validation of the Stash Utility's HTTPS certificate.
+- The client browser must be able to access the Stash Utility, including validation of the Stash Utility's HTTPS certificate and cross-origin resource sharing (CORS).
 - The process that retrieves from the stash must be able to access the Stash Utility, including validation of the Stash Utility's HTTPS certificate. In the case of the ArcGIS `KMLLayer`, the KML sharing service must be able to access the Stash Utility and validate its certificate. By default, the KML sharing service URL is //www.arcgis.com/sharing/kml . The KML sharing service on arcgis.com can only access URLs on the public Internet, so the Stash Utility must be accessible by public URL, and if using HTTPS, the Stash Utility's certificate must be issued by a well-known certificate authority (CA). The alternative is to use the KML sharing service on Portal for ArcGIS, an extension to ArcGIS Server. In that case, the ArcGIS Server machine must be able to access the Stash Utility and validate its certificate. If the certificate is not well known and you still want to use it, you can configure Portal for ArcGIS to accept certificates from other CAs, such as an internal corporate CA.
 
 ## How do I setup and configure the Stash Utility?
@@ -37,7 +37,8 @@ By default, stashed files are deleted after one retrieval. If configured not to 
 1. Set up a Java servlet container or application server. We tested it with Apache Tomcat 7.0.64 and JDK 1.8 64-bit on Windows 7 and on Red Hat Enterprise Linux 7. (On Linux, we used mod_jk to connect Tomcat to Apache HTTP Server to run on well-known ports.)
 2. Build the web application in [source/StashUtility](source/StashUtility) and deploy it to your server.
 3. If desired, edit WEB-INF/web.xml to change the `init-param` values. These parameters are documented in [StashServlet.java](source/StashUtility/src/java/com/esri/defense/se/stashutility/StashServlet.java). You can edit web.xml on your development machine before building the web application or on the web server after deploying the web application. (If you edit web.xml on the web server, restart the application or server after editing web.xml.)
-4. See [example.html](source/StashUtility/web/example.html) to see how to use the Stash Utility with the ArcGIS `KMLLayer` class. You will need to edit that file to match your configuration.
+4. If your server is accessed at a different domain than your web application, enable [cross-origin resource sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) on your server. See http://enable-cors.org/ for guidance on enabling CORS.
+5. See [example.html](source/StashUtility/web/example.html) to see how to use the Stash Utility with the ArcGIS `KMLLayer` class. You will need to edit that file to match your configuration.
 
 ## Issues
 
