@@ -44,6 +44,8 @@ By default, stashed files are deleted after one retrieval. If configured not to 
 
 Find a bug or want to request a new feature?  Please let us know by [submitting an issue](issues/new).
 
+Please note that this is an unsupported proof of concept released under the Apache License. This code is not supported by Esri, including Esri Support. Please [create issues](issues/new) if you would like to ask questions or suggest improvements.
+
 ## Contributing
 
 Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
