@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+<title></title>
+
+<link rel="stylesheet" href="//js.arcgis.com/3.14/dijit/themes/tundra/tundra.css">
+<link rel="stylesheet" href="//js.arcgis.com/3.14/esri/css/esri.css">
+<style>
+  html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+  #map { height: 100%; margin: 0; padding: 0; }
+</style>
+
+<script>
+  var dojoConfig = {
+    paths: { esridefensese: location.pathname.replace(/\/[^/]+$/, "") + "/js/esridefensese" }
+  };
+</script>
+<script src="//js.arcgis.com/3.14/"></script>
+<script>
+  var map;
+  require([
+    "esri/map",
+    "esridefensese/stash/stashUtils",
+    "dojo/parser",
+    "esri/config",
+    "dojo/domReady!"
+  ], function(
+    Map,
+    stashUtils,
+    parser,
+    esriConfig
+  ) {
+    esriConfig.defaults.kmlService = "https://www.arcgis.com/sharing/kml";
+    
+    map = new Map("map", { 
+      basemap: "topo",
+      center: [-108.663, 42.68],
+      zoom: 4
+    });
+
+    parser.parse();
+
+    var kmlUrl = "https://dl.dropboxusercontent.com/u/2654618/kml/Wyoming.kml";    
+    var stashUrl = "https://host.domain.com/stashutility/stash";
+    
+    stashUtils.createStashedKmlLayer(kmlUrl, stashUrl).then(function (kmlLayer) {
+      map.addLayer(kmlLayer);
+    }, function (error) {
+      console.error(error);
+    });
+  });
+</script>
+</head>
+
+<body class="tundra">
+  <div id="map"></div>
+</body>
+</html>
